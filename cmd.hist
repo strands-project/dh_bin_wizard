@@ -1,0 +1,500 @@
+sudo service mongodb stop
+rosrun mongodb_store mongodb_server.py _database_path:=/tmp/mongodb
+rosrun mongodb_store config_manager.py 
+rosrun mongodb_store mongodb_server.py _database_path:=/tmp/mongodb &
+rosrun mongodb_store config_manager.py 
+fg
+git status
+catkin_generate_changelog 
+git pull
+catkin_generate_changelog --all
+catkin_generate_changelog 
+git tag 
+git tag -h
+git tag -l
+ls
+git status
+catkin_generate_changelog -h
+catkin_generate_changelog 
+catkin_prepare_release 
+bloom-release -h
+bloom-release --rosdistro hydro --track hydro strands_webtools --edit
+cd workspace/
+ls
+cd ..
+cd workspace/
+ls
+mkdir src
+cd src/
+catkin_init_workspace 
+wstool init .
+wstool set scitos_common --git https://github.com/strands-project/scitos_common.git
+
+mkdir ~/.config/rosdistro
+nano ~/.config/rosdistro/config.yaml
+catkin_make -C ..
+catkin_generate_changelog  --all
+cd scitos_common/
+ls
+catkin_generate_changelog  --all
+git status
+git commit -m "add changelogs"
+git commit -a -m "add changelogs"
+git add calibrate_chest/CHANGELOG.rst scitos_common/CHANGELOG.rst scitos_description/CHANGELOG.rst scitos_msgs/CHANGELOG.rst
+git status
+git commit
+git push
+catkin_prepare_release
+nano
+nano ./scitos_msgs/package.xml
+nano ./scitos_common/package.xml 
+catkin_prepare_release
+nano ./calibrate_chest/package.xml 
+catkin_prepare_release
+nano ./scitos_description/package.xml 
+catkin_prepare_release
+git commit -a
+git push
+catkin_prepare_release
+bloom-release --rosdistro hydro --track hydro scitos_common --edit
+sudo apt-get install python-bloom
+bloom-release --rosdistro hydro --track hydro scitos_common --edit
+man install
+less ~/.pythonrc 
+cd ../
+wstool set strands_morse --git https://github.com/strands-project/strands_morse.git
+wstool update strands_morse
+catkin_make -C ..
+cd strands_morse/
+catkin_generate_changelog
+catkin_generate_changelog --all
+git commit -a
+git add CHANGELOG.rst
+git commit -a
+git push
+catkin_prepare_release
+bloom-release --rosdistro hydro --track hydro strands_morse --edit
+less package.xml 
+rosdep resolve opencv
+rosdep 
+rosdep resovel opencv
+rosdep resolve opencv
+rosdep db | grep opencv
+nano package.xml 
+fg
+git status
+rosdep install strands_morse
+git commit -a
+git push
+bloom-release --rosdistro hydro --track hydro strands_morse --edit
+grep OpenCV * 
+find -type f | xargs grep OpenCV
+git remote -v
+rosdep install strands_morse
+rosdep -
+rosdep install -s strands_morse
+rosdep keys strands_morse
+source ../../devel/setup.bash 
+roscd strands_morse
+rosdep keys strands_morse
+bloom-release --rosdistro hydro --track hydro strands_morse --edit
+catkin_prepare_release
+catkin_generate_changelog --all
+catkin_generate_changelog 
+catkin_prepare_release
+git commit -a
+git push
+catkin_prepare_release
+bloom-release --rosdistro hydro --track hydro strands_morse --edit
+cd ../scitos_common/
+ls
+git pull
+catkin_make -C ../..
+subl calibrate_chest/CMakeLists.txt 
+catkin_make -C ../..
+find calibrate_chest/ -type f | xargs grep boost
+git commit -a
+git push
+catkin_generate_changelog 
+catkin_prepare_release -h
+catkin_prepare_release 
+git commit -m "updated changelog for release"
+git commit -a -m "updated changelog for release"
+catkin_prepare_release 
+bloom-release -h
+bloom-release -l scitos_common
+bloom-release -l --track hydro scitos_common
+bloom-release -l --track hydro --r hydro scitos_common
+bloom-release -l --track hydro -r hydro scitos_common
+bloom-release  --track hydro -r hydro scitos_common
+rosdep 
+rosdep db | grep pcl
+rospack -h
+rospack depens pcl_ros
+rospack depends pcl_ros
+rospack depends pcl_msgs
+rospack depends pcl_conversions 
+rospack depends pcl_ros
+roscd pcl_ros
+ls
+less package.xml 
+pd
+cd
+cd workspace/src/scitos_common/
+ls
+git pull
+subl calibrate_chest/package.xml 
+git status
+catkin_make -C ../..
+catkin_generate_changelog 
+git commit -a
+git push
+bloom-release  --track hydro -r hydro scitos_common
+catkin_prepare_release 
+bloom-release  --track hydro -r hydro scitos_common
+cd ..
+wstool set strands_webtools --git https://github.com/strands-project/strands_webtools.git
+wstool update strands_webtools
+ls
+cd strands_webtools/
+ls
+less index.html 
+cd apache/
+ls
+less install.sh 
+kess configure_apache.sh 
+less configure_apache.sh 
+cd ..
+git remote add lcas https://github.com/LCAS/strands_webtools.git
+git fetch https://github.com/LCAS/strands_webtools.git
+git diff origin/hydro-devel lcas/HEAD
+git fetch lcas 
+git diff origin/hydro-devel lcas/master 
+git log hydro-devel 
+git log lcas/master 
+ls
+less main.html 
+less apache/install.sh 
+ls apache/
+less CMakeLists.txt 
+cd ../
+cd strands_
+cd strands_webtools/
+less CMakeLists.txt 
+less apache/CMakeLists.txt 
+catkin_make -C ../..
+git log
+ls
+git log main.html
+git diff origin/master 
+git checkout master
+git fetch origin
+git branch
+git fetch origin/master 
+git branch -r
+git checkout origin/master 
+git checkout hydro-devel 
+git pull origin master 
+git branch 
+git fetch -h
+git fetch -aa
+git fetch --all
+git status
+git branch
+git branch -h
+git branch -r
+git checkout master
+git branch
+git checkout marathon 
+git checkout hydro-devel 
+git remote -v
+git checkout origin/master 
+git checkout origin/hydro-devel 
+git pull -h
+git help pull 
+git fetch origin 
+git fetch --all origin 
+git fetch --all
+git help pull 
+git fetch origin master:master 
+git branch
+git checkout master 
+git diff hydro-devel 
+git pull origin hydro-devel 
+git commit -m "merged"
+git push
+git status
+git diff lcas/master 
+git help pull
+git pull --ff-only lcas master 
+git pull --ff-only lcas marathon 
+git status
+git checkout hydro-devel 
+git branch -d master 
+git branch
+git diff marathon 
+git branch -d marathon 
+git branch
+git push
+git remote -h
+git remote rm lcas
+git remote -v
+git branch -r
+git fetch
+git branch -r
+git fetch origin 
+git branch -r
+git fetch --all
+git branch -r
+git help fetch
+git fetch --all -p
+git branch -r
+ls
+ll
+mkdir scripts
+mv webserver.sh scripts/
+git rm webserver.sh
+git add scripts/webserver.sh
+git commit -m "moved webserver.sh"
+git push
+git status
+ls
+catkin_generate_changelog 
+catkin_generate_changelog --all
+git commit
+git add CHANGELOG.rst
+less CHANGELOG.
+less CHANGELOG.rst 
+git commit
+git status
+asciii
+ssh lcas.lincoln.ac.uk
+asciiio
+asciio
+sudo apt-get install asciio
+asciio 
+ssh lcas.lincoln.ac.uk
+sudo add-apt-repository ppa:zanchey/asciinema
+sudo apt-get update
+sudo apt-get install asciinema
+sudo apt-get install python-requests 
+sudo apt-get install asciinema
+sudo pip install asciinema
+asciinema 
+asciinema auth
+asciinema 
+less /opt/ros/hydro/share/scitos_description/package.xml 
+roscd strands_webtools
+source /opt/ros/hydro/setup.bash 
+roscd strands_webtools
+ls
+rosls scitos_description 
+sudo apt-get update 
+sudo apt-get install ros-hydro-scitos-common ros-hydro-strands-webtools ros-hydro-calibrate-chest 
+source /opt/ros/hydro/setup.bash 
+rosls calibrate-chest
+rosrun calibrate-chest 
+ls /opt/ros/hydro/bin/
+ls -lrt /opt/ros/hydro/bin/
+ls -lrt /opt/ros/hydro/share/map_server/
+ls -lrt /opt/ros/hydro/lib/map_server/
+cd
+ls
+cd
+cd workspace/
+ls
+cd src/
+ls
+cd scitos_common/
+ls
+cd calibrate_chest/
+git pull
+subl CMakeLists.txt 
+ls
+
+catkin_make -C ../..
+catkin_make -C ../../..
+catkin_make -C ../../.. install 
+ll ../../../install/
+ll ../../../install/lib/
+ll ../../../install/lib/calibrate_chest/
+git commit -a
+catkin_generate_changelog --all
+cd ..
+catkin_generate_changelog --all
+catkin_generate_changelog 
+git commit -a -m "update changelog"
+git push
+git status
+catkin_prepare_release 
+bloom-release  --track hydro -r hydro scitos_common
+less ~/Downloads/ros-hydro-calibrate-chest_0.0.4-0precise-20140827-1419-+0000_amd64.deb 
+curl http://lcas.lincoln.ac.uk/repos/public.key | sudo apt-key add -
+sudo apt-add-repository http://lcas.lincoln.ac.uk/repos/building
+sudo nano /etc/apt/sources.list
+sudo apt-get update
+sudo nano /etc/apt/sources.list
+sudo nano /etc/apt/sources.list.d/google-chrome.list
+sudo nano /etc/apt/sources.list.d/google.list
+sudo rm /etc/apt/sources.list.d/google.list
+sudo apt-get update
+sudo apt-get install ros-hydro-bayes-tracking 
+dpkg -L ros-hydro-bayes-tracking
+less /opt/ros/hydro/share/bayes_tracking/cmake/bayes_trackingConfig.cmake 
+roscd bayes_tracking
+ls
+less package.xml 
+less cmake/bayes_trackingConfig.cmake 
+ls
+sudo apt-get install ros-hydro-scitos-common 
+sudo apt-get install ros-hydro-strands-webtools 
+sudo apt-get install ros-hydro-strands-morse 
+roscd strands_morse 
+ls
+cd
+cd workspace/
+#bloom-release  --track hydro -r hydro scitos_common
+bloom-release  --track hydro -r hydro scitos_common --edit
+bloom-release  --track hydro -r hydro strands_webtools
+bloom-release  --track hydro -r hydro strands_webtools --edit
+bloom-release  --track hydro -r hydro mongodb_store --edit
+sudo apt-get install ros-hydro-mongodb-store
+sudo apt-get install ros-hydro-mongodb-store-cpp-client 
+sudo apt-get install ros-hydro-mongodb-store-msgs 
+rosrun mongodb_store mongodb_server.py 
+rosrun mongodb_store mongodb_server.py -h
+rosrun mongodb_store mongo_bridge.py 
+rosrun mongodb_store config_manager.py 
+catkin_generate_changelog -h
+catkin_prepare_release -h
+man catkin_prepare_release 
+ls
+cd src/scitos_common/calibrate_chest/
+cd
+curl http://lcas.lincoln.ac.uk/repos/public.key | sudo apt-key add -
+sudo -h
+sudo -k
+curl http://lcas.lincoln.ac.uk/repos/public.key | sudo apt-key add -
+curl --help
+man curl 
+sudo -k
+curl -s http://lcas.lincoln.ac.uk/repos/public.key | sudo apt-key add -
+ssh linda
+ssh strands@linda
+sudo apt-get install ros-hydro-bayes-tracking 
+dpkg -L ros-hydro-bayes-tracking
+bloom-release  --track hydro -r hydro strands_webtools --edit
+bloom-release  --track hydro -r hydro strands_morse --edit
+cd
+ls
+ssh -X strands@10.210.9.131
+wget https://eylj.org/uploads/media/pages/s_317/p_09-2014/o_191htp5cuqr91ovnhna11q1gtva.jpg
+eog o_191htp5cuqr91ovnhna11q1gtva.jpg 
+wget https://eylj.org/index.php?app=core&module=school&section=overview&schoolId=317&view=images
+less index.php\?app\=core 
+rm index.php\?app\=core 
+rm index.html*
+ls
+mkdir ~/Dropbox/code-hacks
+mkdir ~/Dropbox/code-hacks/matlab
+mv *.m  ~/Dropbox/code-hacks/matlab
+man curl 
+#curl wget https://eylj.org/index.php?app=core&module=school&section=overview&schoolId=317&view=images
+man curl 
+curl -b session_id=f5de9bf43591b0ff7aeac6251d47ba91 https://eylj.org/index.php?app=core&module=school&section=overview&schoolId=317&view=images
+ll
+rm o_191htp5cuqr91ovnhna11q1gtva.jpg 
+ls
+#curl -b session_id=f5de9bf43591b0ff7aeac6251d47ba91 https://eylj.org/index.php?app=core&module=school&section=overview&schoolId=317&view=images
+tail -f mira/install.log 
+find -iname "*scitos*"
+ls
+find -iname "*g5*"
+less mira-installer.sh 
+ll
+ll mira
+ll -lrt mira
+ll -lrt mira/domains/
+ll -lrt mira/domains/robot/
+cd mira/
+ls
+make
+ls
+less install.stage 
+ll build/
+ll build/debug/
+ll build/release/
+cd build/release/
+ls
+make
+cd ../..
+less ../mira-installer.sh 
+ls
+source start.bash 
+env | grep MIRA
+env | grep mira
+miracenter 
+miracenter -h
+miracenter --help
+miracd 
+miracenter 
+cd domains/robot/SCITOS
+ls
+env | grep mira
+ls
+less CMakeLists.txt 
+cd ../../..
+less CMakeLists.txt 
+cd ..
+less mira-installer.sh 
+mirapackage -h
+mirapackage --help
+DISPLAY="" mirapackage --help
+DISPLAY="" mirapackage -L
+DISPLAY="" mirapackage -L all
+DISPLAY="" mirapackage -L
+DISPLAY="" mirapackage --help
+DISPLAY="" mirapackage --details SCITOS
+less mira/domains/robot/SCITOS/modules/EBC/src/SCITOSEBC.C 
+ll mira/lib/
+less mira-installer.sh 
+find -iname "*g5*"
+find -iname "*scitos*"
+find -iname "*g5*"
+less mira-installer.sh 
+miramk --help
+miramk SCITOS
+miramk --help
+miramk SCITOS:release
+miramk --help
+fg
+miramk SCITOS:release -j4
+miracenter 
+miracenter --help
+find -name "*.xml"
+miracenter ./mira/domains/robot/SCITOS/etc/SCITOS-G6-model.xml
+miracenter --help
+find -name "*.xml"
+less ./mira/domains/robot/SCITOSConfigs/etc/SCITOS-application.xml
+miracenter --help
+miracenter ./mira/domains/robot/SCITOSConfigs/etc/SCITOS-application.xml
+
+cat > scitos.xml
+miracenter ./scitos.xml
+cat > scitos.xml
+miracenter ./scitos.xml
+cat > SCITOSRobotAttributes.xml
+miracenter ./scitos.xml
+cd ..
+git clone https://github.com/strands-project/scitos_drivers.git
+cd mira_installer/
+cd ../scitos_drivers/scitos_mira/resources/
+ls
+miracenter SCITOSDriver.xml
+miramk CAN:release -j4
+miracenter SCITOSDriver.xml
+miramk CANDriverUnit:release -j4
+mirapackage -l
+mirapackage -L
+miramk CANDriver:release -j4
+miracenter SCITOSDriver.xml
