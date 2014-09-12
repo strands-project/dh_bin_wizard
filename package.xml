@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>mira</name>
+  <name>mira_installer</name>
   <version>0.0.0</version>
   <description>The mira package</description>
 
@@ -46,7 +46,6 @@
   <build_depend>libqwt5-qt4-dev</build_depend>
   <build_depend>libsqlite3-dev</build_depend>
   <build_depend>libssl-dev</build_depend>
-  <build_depend>libsvn-dev</build_depend>
   <build_depend>libxml2</build_depend>
   <build_depend>libxrandr</build_depend>
   <build_depend>opencv2</build_depend>
@@ -59,7 +58,6 @@
   <run_depend>libqwt5-qt4-dev</run_depend>
   <run_depend>libsqlite3-dev</run_depend>
   <run_depend>libssl-dev</run_depend>
-  <run_depend>libsvn-dev</run_depend>
   <run_depend>libxml2</run_depend>
   <run_depend>libxrandr</run_depend>
   <run_depend>opencv2</run_depend>
