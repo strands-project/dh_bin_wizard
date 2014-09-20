@@ -4,12 +4,13 @@
 
 confirm()
 {
-	echo -n "$1 ? (n) "
-	read ans
-	case "$ans" in
-	y|Y|yes|YES|Yes) return 0 ;;
-	*) return 1 ;;
-	esac
+#	echo -n "$1 ? (n) "
+#	read ans
+#	case "$ans" in
+#	y|Y|yes|YES|Yes) return 0 ;;
+#	*) return 1 ;;
+#	esac
+	return 0
 }
 
 infoMsg()
@@ -47,9 +48,9 @@ echo "*"
 echo "************************************************************************"
 echo ""
 
-INSTALL_DIR_DEFAULT=`pwd`/mira
+INSTALL_DIR_DEFAULT=/opt/mira-release
 
-read -p "Please input the installation directory. Enter=default($INSTALL_DIR_DEFAULT): " INSTALL_DIR_INPUT
+#read -p "Please input the installation directory. Enter=default($INSTALL_DIR_DEFAULT): " INSTALL_DIR_INPUT
 
 if [ -z "$INSTALL_DIR_INPUT" ]; then
 	INSTALL_DIR_INPUT=$INSTALL_DIR_DEFAULT
@@ -64,8 +65,8 @@ INSTALL_DIR=$(cd $(eval "dirname ${INSTALL_DIR_INPUT}");pwd)/$(eval "basename ${
 BOOTSTRAP_DIR=$INSTALL_DIR/bootstrap
 
 TARGET="release"
-JOB_CNT=1
-JOB_CNT_DEFAULT=1
+JOB_CNT=8
+JOB_CNT_DEFAULT=8
 DOWNLOAD_DIR=$INSTALL_DIR
 LOG_FILE="$INSTALL_DIR/install.log"
 STAGE_FILE="$INSTALL_DIR/install.stage"
@@ -112,7 +113,7 @@ if [ -d $INSTALL_DIR ] ; then
 fi
 
 echo ""
-read -p "Please enter number of parallel build jobs for 'make -jN'. Enter=default($JOB_CNT_DEFAULT): " JOB_CNT
+#read -p "Please enter number of parallel build jobs for 'make -jN'. Enter=default($JOB_CNT_DEFAULT): " JOB_CNT
 if [ -z "$JOB_CNT" ]; then
 	JOB_CNT=$JOB_CNT_DEFAULT
 fi
