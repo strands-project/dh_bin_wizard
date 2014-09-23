@@ -48,6 +48,9 @@ echo "*"
 echo "************************************************************************"
 echo ""
 
+echo "TEMPORARY HACK TO INSTALL libsvn-dev until https://github.com/ros/rosdistro/pull/5813 is merged"
+apt-get install libsvn-dev
+
 INSTALL_DIR_DEFAULT=/opt/mira-release
 
 #read -p "Please input the installation directory. Enter=default($INSTALL_DIR_DEFAULT): " INSTALL_DIR_INPUT
