@@ -383,8 +383,8 @@ infoMsg "* in your bash console to get started"
 infoMsg "************************************************************************"
 infoMsg ""
 
-if confirm "Start mirapackage to install more packages" ; then
-	export MIRA_PATH="$INSTALL_DIR"
-	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lib
-	$INSTALL_DIR/bin/mirapackage
-fi
+export MIRA_PATH="$INSTALL_DIR"
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lib
+$INSTALL_DIR/bin/mirapackage -L
+
+
