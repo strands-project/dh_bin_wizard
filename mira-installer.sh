@@ -49,7 +49,7 @@ echo "************************************************************************"
 echo ""
 
 echo "TEMPORARY HACK TO INSTALL libsvn-dev until https://github.com/ros/rosdistro/pull/5813 is merged"
-apt-get -y install libsvn-dev libqtwebkit-dev libqt4-opengl-dev
+apt-get -y install libsvn-dev libqtwebkit-dev libqt4-opengl-dev wget
 
 if [ "$1" ]; then
 	export WORKSPACE="$1"
