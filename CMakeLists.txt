@@ -6,3 +6,4 @@ add_custom_target(mira ALL
 )
 
 
+install(CODE "MESSAGE(\"no install step necessary.\")")
