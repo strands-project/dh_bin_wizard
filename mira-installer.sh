@@ -23,7 +23,7 @@ fatalInfoMsg()
 	echo $1 >> $LOG_FILE
 	echo ""
 	echo "....."
-	tail -n20 $LOG_FILE
+	cat $LOG_FILE
 	echo ""
 	echo "$1 For more details look into $LOG_FILE"
 	exit -1
