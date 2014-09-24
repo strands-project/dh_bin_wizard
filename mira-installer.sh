@@ -51,6 +51,10 @@ echo ""
 echo "TEMPORARY HACK TO INSTALL libsvn-dev until https://github.com/ros/rosdistro/pull/5813 is merged"
 apt-get -y install libsvn-dev libqtwebkit-dev libqt4-opengl-dev
 
+if [ "$1" ]; then
+	export WORKSPACE="$1"
+fi
+
 if [ "$WORKSPACE" ]; then
 	INSTALL_DIR_DEFAULT="$WORKSPACE/mira-release"
 else
