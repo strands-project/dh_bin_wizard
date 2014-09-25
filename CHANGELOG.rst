@@ -2,8 +2,8 @@
 Changelog for package mira_strands
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.1 (2014-09-25)
+------------------
 * added CMAKE_PREFIX_PATH
 * added libsvn-dev
 * Contributors: Marc Hanheide
