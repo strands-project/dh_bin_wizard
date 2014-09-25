@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
 <package>
-  <name>mira_installer</name>
+  <name>mira_strands</name>
   <version>0.0.2</version>
-  <description>The mira package</description>
+  <description>The mira_strands package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
   <maintainer email="marc@hanheide.net">Marc Hanheide</maintainer>
+  
+  <author email="Christian.Martin@metralabs.com">Christian Martin</author>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
@@ -19,7 +21,7 @@
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/mira</url> -->
+  <url type="website">http://www.mira-project.org</url>
 
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
@@ -53,6 +55,7 @@
   <build_depend>pyqt4-dev-tools</build_depend>
   <build_depend>qt4-dev-tools</build_depend>
   <build_depend>libqt4-opengl-dev</build_depend>
+  <build_depend>libqtwebkit-dev</build_depend>
   <build_depend>subversion</build_depend>
   <!--<build_depend>libsvn-dev</build_depend>-->
   <run_depend>boost</run_depend>
