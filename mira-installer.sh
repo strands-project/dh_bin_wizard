@@ -319,8 +319,8 @@ do
 		#installPackage PlotVisualization
 		#installPackage Localization
 		#installPackage Navigation
-		installPackage RigidModel
-		installPackage RobotDataTypes
+		#installPackage RigidModel
+		#installPackage RobotDataTypes
 		#installPackage VideoCodecs
 
 		#installPackage MIRACenter
