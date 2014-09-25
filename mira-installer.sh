@@ -312,26 +312,26 @@ do
 		installPackage MIRAPackage
 
 		installPackage MIRAFramework
-		installPackage GUIWidgets
+		#installPackage GUIWidgets
 
-		installPackage CommonCodecs
-		installPackage CommonVisualization
-		installPackage PlotVisualization
-		installPackage Localization
-		installPackage Navigation
+		#installPackage CommonCodecs
+		#installPackage CommonVisualization
+		#installPackage PlotVisualization
+		#installPackage Localization
+		#installPackage Navigation
 		installPackage RigidModel
 		installPackage RobotDataTypes
-		installPackage VideoCodecs
+		#installPackage VideoCodecs
 
-		installPackage MIRACenter
-		installPackage TapeEditor
+		#installPackage MIRACenter
+		#installPackage TapeEditor
 		#installPackage TapeRecorder # since 2013-02-14 part of MIRACenter
 		#installPackage TapePlayer   # since 2013-02-14 part of MIRACenter
 
-		installPackage MIRA
-		installPackage MIRAgui
-		installPackage MIRAtape
-		installPackage MIRAWizard
+		#installPackage MIRA
+		#installPackage MIRAgui
+		#installPackage MIRAtape
+		#installPackage MIRAWizard
 
 		# Now delete the bootstrap directory
 		rm -rf $BOOTSTRAP_DIR
