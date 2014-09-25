@@ -2,8 +2,8 @@
 Changelog for package mira_strands
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2014-09-25)
+------------------
 * Update package.xml
 * Contributors: Marc Hanheide
 
