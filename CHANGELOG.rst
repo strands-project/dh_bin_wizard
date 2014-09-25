@@ -2,6 +2,11 @@
 Changelog for package mira_strands
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Update mira-installer.sh
+* Contributors: Marc Hanheide
+
 0.1.1 (2014-09-25)
 ------------------
 * added CMAKE_PREFIX_PATH
