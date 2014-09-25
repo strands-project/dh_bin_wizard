@@ -51,14 +51,15 @@ echo ""
 
 export CMAKE_PREFIX_PATH=/opt/ros/indigo:/opt/ros/hydro
 
-if [ "$1" ]; then
-	export WORKSPACE="$1"
-fi
 
 if [ "$WORKSPACE" ]; then
-	INSTALL_DIR_DEFAULT="$WORKSPACE/mira-release"
+	export INSTALL_DIR_DEFAULT="$WORKSPACE/mira-release"
 else
-	INSTALL_DIR_DEFAULT=/opt/mira-release
+	if [ "$1" ]; then
+		export INSTALL_DIR_DEFAULT="$1"
+	else
+		export INSTALL_DIR_DEFAULT=/opt/mira-release
+	fi
 fi
 
 #read -p "Please input the installation directory. Enter=default($INSTALL_DIR_DEFAULT): " INSTALL_DIR_INPUT
@@ -73,7 +74,7 @@ INSTALL_DIR=$(cd $(eval "dirname ${INSTALL_DIR_INPUT}");pwd)/$(eval "basename ${
 #######################################################################
 # Variables
 
-BOOTSTRAP_DIR=$INSTALL_DIR/bootstrap
+BOOTSTRAP_DIR=`mktemp`
 
 TARGET="release"
 JOB_CNT=8
