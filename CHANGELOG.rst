@@ -2,8 +2,8 @@
 Changelog for package mira_strands
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.4 (2014-09-25)
+------------------
 * Update mira-installer.sh
 * Contributors: Marc Hanheide
 
