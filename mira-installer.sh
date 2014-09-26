@@ -70,7 +70,7 @@ INSTALL_DIR=$(cd $(eval "dirname ${INSTALL_DIR_INPUT}");pwd)/$(eval "basename ${
 #######################################################################
 # Variables
 
-BOOTSTRAP_DIR=`mktemp`
+BOOTSTRAP_DIR=`mktemp -d`
 
 TARGET="release"
 JOB_CNT=8
