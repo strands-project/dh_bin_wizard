@@ -52,14 +52,10 @@ echo ""
 export CMAKE_PREFIX_PATH=/opt/ros/indigo:/opt/ros/hydro
 
 
-if [ "$WORKSPACE" ]; then
-	export INSTALL_DIR_DEFAULT="$WORKSPACE/mira-release"
+if [ "$1" ]; then
+	export INSTALL_DIR_DEFAULT="$1"
 else
-	if [ "$1" ]; then
-		export INSTALL_DIR_DEFAULT="$1"
-	else
-		export INSTALL_DIR_DEFAULT=/opt/mira-release
-	fi
+	export INSTALL_DIR_DEFAULT=/opt/mira-release
 fi
 
 #read -p "Please input the installation directory. Enter=default($INSTALL_DIR_DEFAULT): " INSTALL_DIR_INPUT
