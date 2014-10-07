@@ -4,13 +4,12 @@
 
 confirm()
 {
-#	echo -n "$1 ? (n) "
-#	read ans
-#	case "$ans" in
-#	y|Y|yes|YES|Yes) return 0 ;;
-#	*) return 1 ;;
-#	esac
-	return 0
+	echo -n "$1 ? (n) "
+	read ans
+	case "$ans" in
+	y|Y|yes|YES|Yes) return 0 ;;
+	*) return 1 ;;
+	esac
 }
 
 infoMsg()
@@ -23,7 +22,7 @@ fatalInfoMsg()
 	echo $1 >> $LOG_FILE
 	echo ""
 	echo "....."
-	cat $LOG_FILE
+	tail -n20 $LOG_FILE
 	echo ""
 	echo "$1 For more details look into $LOG_FILE"
 	exit -1
@@ -42,23 +41,39 @@ installPackage()
 
 echo "************************************************************************"
 echo "*"
-echo "* This is the MIRA source installer. It will download and compile a"
+echo "* This is the MIRA binary installer. It will download and compile a"
 echo "* basic configuration of MIRA on your system."
 echo "*"
 echo "************************************************************************"
 echo ""
 
+FTPURL=ftp://mira-project.org
 
-export CMAKE_PREFIX_PATH=/opt/ros/indigo:/opt/ros/hydro
-
-
-if [ "$1" ]; then
-	export INSTALL_DIR_DEFAULT="$1"
-else
-	export INSTALL_DIR_DEFAULT=/opt/mira-release
+if [ $# -gt 2 -o $# -eq 0 -o "$1" == "help" -o "$1" == "--help" ] ; then
+	echo "Usage: $0 SystemName [ftp url]"
+	echo "  Following systems are supports at default FTP (\"$FTPURL\"): "
+	echo "    redhat-el6-i686     : RedHat Enterprise Linux / CentOS 6.x, 32bit"
+	echo "    ubuntu-1204lts-i686 : Ubuntu 12.04LTS, 32bit"
+	echo "    ubuntu-1204lts-x64  : Ubuntu 12.04LTS, 64bit"
+	exit
 fi
 
-#read -p "Please input the installation directory. Enter=default($INSTALL_DIR_DEFAULT): " INSTALL_DIR_INPUT
+SYSTEM=$1
+
+if [ $# -gt 1 ] ; then
+	echo "The following FTP settings will be used:"
+	FTPURL=$2
+	echo "Url: ${FTPURL}"
+	if ! confirm "Do you want to proceed?"  ; then
+		exit
+	fi
+fi
+
+###############################################################################
+
+INSTALL_DIR_DEFAULT=`pwd`/mira
+
+read -p "Please input the installation directory. Enter=default($INSTALL_DIR_DEFAULT): " INSTALL_DIR_INPUT
 
 if [ -z "$INSTALL_DIR_INPUT" ]; then
 	INSTALL_DIR_INPUT=$INSTALL_DIR_DEFAULT
@@ -70,20 +85,18 @@ INSTALL_DIR=$(cd $(eval "dirname ${INSTALL_DIR_INPUT}");pwd)/$(eval "basename ${
 #######################################################################
 # Variables
 
-BOOTSTRAP_DIR=`mktemp -d`
+BOOTSTRAP_DIR=$INSTALL_DIR/bootstrap
 
-TARGET="release"
-JOB_CNT=8
-JOB_CNT_DEFAULT=8
 DOWNLOAD_DIR=$INSTALL_DIR
 LOG_FILE="$INSTALL_DIR/install.log"
 STAGE_FILE="$INSTALL_DIR/install.stage"
 START_STAGE=1
-END_STAGE=13
+END_STAGE=12
 
-MIRAENV_URL="ftp://mira-project.org/repos/MIRA-main/src/env/latest/MIRAenvironment.zip"
-MIRABASE_URL="ftp://mira-project.org/repos/MIRA-main/src/base/latest/MIRABase.zip"
-MIRAPACKAGE_URL="ftp://mira-project.org/repos/MIRA-main/src/tools/mirapackage/latest/MIRAPackage.zip"
+MIRAENV_URL="${FTPURL}/repos/MIRA-main/${SYSTEM}/env/latest/MIRA-MIRAenvironment*.zip"
+MIRAEXT_URL="${FTPURL}/repos/MIRA-main/${SYSTEM}/external/latest/MIRA-external*.zip"
+MIRABASE_URL="${FTPURL}/repos/MIRA-main/${SYSTEM}/base/latest/MIRA-MIRABase*.zip"
+MIRAPACKAGE_URL="${FTPURL}/repos/MIRA-main/${SYSTEM}/tools/mirapackage/latest/MIRA-MIRAPackage*.zip"
 
 #######################################################################
 
@@ -121,18 +134,6 @@ if [ -d $INSTALL_DIR ] ; then
 fi
 
 echo ""
-#read -p "Please enter number of parallel build jobs for 'make -jN'. Enter=default($JOB_CNT_DEFAULT): " JOB_CNT
-if [ -z "$JOB_CNT" ]; then
-	JOB_CNT=$JOB_CNT_DEFAULT
-fi
-
-expr $JOB_CNT + 1 > /dev/null
-if [ $? -ne 0 ] ; then
-	echo "FATAL: Invalid number of build jobs. Abort!"
-	exit
-fi
-
-echo ""
 
 for (( i=$START_STAGE; i<=$END_STAGE; i++ ))
 do
@@ -158,7 +159,7 @@ do
 		touch $STAGE_FILE;;
 	2)
 		#######################################################################
-		# Download MIRAEnvironment (for bootstrap environment)
+		# Download MIRAEnvironment
 
 		infoMsg "INFO: Downloading MIRAEnvironment..."
 		wget -q $MIRAENV_URL -P $DOWNLOAD_DIR
@@ -167,120 +168,109 @@ do
 		fi;;
 	3)
 		#######################################################################
-		# Download MIRABase (for bootstrap environment)
+		# Download MIRA external
+
+		infoMsg "INFO: Downloading MIRA external..."
+		wget -q $MIRAEXT_URL -P $DOWNLOAD_DIR
+		if [ $? -ne 0 ] ; then
+			fatalInfoMsg "FATAL: Failed to download $MIRAEXT_URL"
+		fi;;
+	4)
+		#######################################################################
+		# Download MIRABase
 
 		infoMsg "INFO: Downloading MIRABase..."
 		wget -q $MIRABASE_URL -P $DOWNLOAD_DIR
 		if [ $? -ne 0 ] ; then
 			fatalInfoMsg "FATAL: Failed to download $MIRABASE_URL"
 		fi;;
-	4)
+	5)
 		#######################################################################
-		# Download MIRAPackage (for bootstrap environment)
+		# Download MIRAPackage
 
 		infoMsg "INFO: Downloading MIRAPackage..."
 		wget -q $MIRAPACKAGE_URL -P $DOWNLOAD_DIR
 		if [ $? -ne 0 ] ; then
 			fatalInfoMsg "FATAL: Failed to download $MIRAPACKAGE_URL"
 		fi;;
-	5)
+	6)
 		#######################################################################
 		# Create the MIRA bootstrap environment
 		
 		infoMsg "INFO: Unzip MIRAenvironment..."
 		# unzip MIRAenvironment
 		cd $BOOTSTRAP_DIR
-		unzip -q $DOWNLOAD_DIR/MIRAenvironment.zip
-
-		# Since MIRAenvironment.zip contains a path 'MIRA', we have to move all
-		# files to $BOOTSTRAP_DIR
-		mv MIRA/* MIRA/.????* $BOOTSTRAP_DIR
-		rmdir MIRA
+		unzip -q $DOWNLOAD_DIR/MIRA-MIRAenvironment*.zip
 
 		# Clean up
-		rm $DOWNLOAD_DIR/MIRAenvironment.zip;;
-	6)
+		rm $DOWNLOAD_DIR/MIRA-MIRAenvironment*.zip;;
+	7)
+		#######################################################################
+		# Unpack MIRA external in bootstrap environment
+		
+		infoMsg "INFO: Unzip MIRA external..."
+		# unzip MIRABase
+		cd $BOOTSTRAP_DIR
+		unzip -q $DOWNLOAD_DIR/MIRA-external*.zip
+
+		# Clean up
+		rm $DOWNLOAD_DIR/MIRA-external*.zip;;
+	8)
 		#######################################################################
 		# Unpack MIRABase in bootstrap environment
 
 		infoMsg "INFO: Unzip MIRABase..."
 		# unzip MIRABase
 		cd $BOOTSTRAP_DIR
-		unzip -q $DOWNLOAD_DIR/MIRABase.zip
+		unzip -q $DOWNLOAD_DIR/MIRA-MIRABase*.zip
 
 		# Clean up
-		rm $DOWNLOAD_DIR/MIRABase.zip;;
-	7)
+		rm $DOWNLOAD_DIR/MIRA-MIRABase*.zip;;
+	9)
 		#######################################################################
 		# Unpack MIRAPackage in bootstrap environment
 
 		infoMsg "INFO: Unzip MIRAPackage..."
 		# unzip MIRAPackage
 		cd $BOOTSTRAP_DIR/tools
-		unzip -q $DOWNLOAD_DIR/MIRAPackage.zip
+		unzip -q $DOWNLOAD_DIR/MIRA-MIRAPackage*.zip
 
 		# Clean up
-		rm $DOWNLOAD_DIR/MIRAPackage.zip;;
-	8)
-		#######################################################################
-		# Bootstrapping mira base system
-
-		infoMsg "INFO: Bootstrapping MIRA base system. Please wait (~5min, Dual-core 2GHz)..."
-		cd $BOOTSTRAP_DIR
-
-		export MIRA_PATH="$BOOTSTRAP_DIR"
-
-		# Step 1/3 - Create the build environment
-		infoMsg "INFO: Bootstrapping 1/3: Perform the cmake step..."
-		make depend_$TARGET >> $LOG_FILE 2>&1
-		if [ $PIPESTATUS -ne 0 ] ; then
-			fatalInfoMsg "FATAL: cmake step failed."
-		fi;;
-	9)
-		#######################################################################
-		# Bootstrapping mira base system
-		# Step 2/3 - Build only MIRABase using -j1 to ensure, that all external dependencies
-		# are correctly downloaded.
-
-		cd $BOOTSTRAP_DIR
-		export MIRA_PATH="$BOOTSTRAP_DIR"
-
-		infoMsg "INFO: Bootstrapping 2/3: Building MIRABase..."
-		make MIRABase_$TARGET 2>&1 | tee -a $LOG_FILE | \
-			grep --line-buffered "%]" | awk '{printf("\b\b\b\b\b\b\b%6s",substr($0,0,6))}'
-		if [ $PIPESTATUS -ne 0 ] ; then
-			fatalInfoMsg "FATAL: Building MIRABase failed."
-		fi
-		echo "";;
+		rm $DOWNLOAD_DIR/MIRA-MIRAPackage*.zip;;
 	10)
 		#######################################################################
-		# Bootstrapping mira base system
-		# Step 3/3 - Build MIRAPackage using -jN
+		# Fixing directory names
 
+		infoMsg "INFO: Fixing directory names in MIRA base system."
 		cd $BOOTSTRAP_DIR
-		export MIRA_PATH="$BOOTSTRAP_DIR"
 
-		infoMsg "INFO: Bootstrapping 3/3: Building MIRAPackage..."
-		make -j$JOB_CNT mirapackage_$TARGET 2>&1 | tee -a $LOG_FILE | \
-			grep --line-buffered "%]" | awk '{printf("\b\b\b\b\b\b\b%6s",substr($0,0,6))}'
-		if [ $PIPESTATUS -ne 0 ] ; then
-			fatalInfoMsg "FATAL: Build step failed."
-		fi
+		for p in `find . -type d -a -name "MIRA_*"`; do
+			b=`basename $p`
+			newDir=${b/MIRA_/}
+			if [ ! -d $newDir ] ; then mkdir $newDir ; fi
+			mv $p/* $newDir
+			rmdir $p
+		done
 
 		# Delete package files in BOOTSTRAP directory to avoid the mirapackage
 		# will find them.
 		find $BOOTSTRAP_DIR -name "*.package" | xargs rm -f
 
-		echo "";;
+		;;
 	11)
 		#######################################################################
-		# Use mirapackage from BOOTSTRAP directory to download and all packages
+		# Use mirapackage to download and install the rest of MIRA
 
 		cd $BOOTSTRAP_DIR
 		export MIRA_PATH="$BOOTSTRAP_DIR:$INSTALL_DIR"
+		export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$BOOTSTRAP_DIR/lib"
 
-		infoMsg "INFO: Clear repositories."
-		$BOOTSTRAP_DIR/bin/mirapackage --clearrepos 2>&1 | tee -a $LOG_FILE
+		if [ -f ${HOME}/.config/mira/mirapackage.xml ] ; then
+			if confirm "An existing configuration of mirapackage was found. Should the installer delete this to get a clean environment" ; then
+				infoMsg "INFO: Clear repositories."
+				$BOOTSTRAP_DIR/bin/mirapackage --clearrepos 2>&1 | tee -a $LOG_FILE
+			fi
+		fi
 
 		# Ignore error here, which may caused by invalid repo configuration
 		#if [ $PIPESTATUS -ne 0 ] ; then
@@ -288,7 +278,7 @@ do
 		#fi
 
 		infoMsg "INFO: Add installation repository"
-		$BOOTSTRAP_DIR/bin/mirapackage --addurl ftp://mira-project.org/repos/MIRA-main/src/MIRA-main.repo 2>&1 | tee -a $LOG_FILE
+		$BOOTSTRAP_DIR/bin/mirapackage --addurl "${FTPURL}/repos/MIRA-main/${SYSTEM}/MIRA-main.repo" 2>&1 | tee -a $LOG_FILE
 		if [ $PIPESTATUS -ne 0 ] ; then
 			fatalInfoMsg "FATAL: Add installation repository failed."
 		fi
@@ -300,11 +290,7 @@ do
 		fi
 
 		installPackage MIRAenvironment
-		# Since MIRAenvironment.zip contains a path 'MIRA', we have to move all
-		# files to $INSTALL_DIR
-		mv $INSTALL_DIR/MIRA/* $INSTALL_DIR
-		rmdir $INSTALL_DIR/MIRA
-
+		installPackage external
 		installPackage MIRABase
 		installPackage MIRAPackage
 
@@ -319,15 +305,17 @@ do
 		installPackage RigidModel
 		installPackage RobotDataTypes
 		installPackage VideoCodecs
+		installPackage GraphVisualization
 
 		installPackage MIRACenter
 		installPackage TapeEditor
-		installPackage TapeRecorder # since 2013-02-14 part of MIRACenter
-		installPackage TapePlayer   # since 2013-02-14 part of MIRACenter
+		#installPackage TapeRecorder # since 2013-02-14 part of MIRACenter
+		#installPackage TapePlayer   # since 2013-02-14 part of MIRACenter
 
 		installPackage MIRA
 		installPackage MIRAgui
 		installPackage MIRAtape
+		installPackage MIRAinspect
 		installPackage MIRAWizard
 
 		# Now delete the bootstrap directory
@@ -335,34 +323,6 @@ do
 
 		;;
 	12)
-		#######################################################################
-		# Build MIRA
-
-		cd $INSTALL_DIR
-		export MIRA_PATH="$INSTALL_DIR"
-
-		infoMsg "INFO: Building MIRA 1/3: Perform the cmake step..."
-		make depend_$TARGET >> $LOG_FILE 2>&1
-		if [ $PIPESTATUS -ne 0 ] ; then
-			fatalInfoMsg "FATAL: cmake step failed."
-		fi
-
-		infoMsg "INFO: Building MIRA 2/3: Building MIRABase..."
-		make MIRABase_$TARGET 2>&1 | tee -a $LOG_FILE | \
-			grep --line-buffered "%]" | awk '{printf("\b\b\b\b\b\b\b%6s",substr($0,0,6))}'
-		if [ $PIPESTATUS -ne 0 ] ; then
-			fatalInfoMsg "FATAL: Building MIRABase failed."
-		fi
-		echo ""
-
-		infoMsg "INFO: Building MIRA 3/3: Compiling. Please wait (~45min, Dual-core 2GHz)..."
-		make -j$JOB_CNT $TARGET 2>&1 | tee -a $LOG_FILE | \
-			grep --line-buffered "%]" | awk '{printf("\b\b\b\b\b\b\b%6s",substr($0,0,6))}'
-		if [ $PIPESTATUS -ne 0 ] ; then
-			fatalInfoMsg "FATAL: Building MIRA failed."
-		fi
-		echo "";;
-	13)
 		#######################################################################
 		# Create bash file
 
@@ -376,6 +336,9 @@ do
 	# Write current completed stage to stage file
 	expr $i + 1 > $STAGE_FILE
 done
+
+# clean up
+rm $STAGE_FILE
 
 infoMsg "************************************************************************"
 infoMsg "*"
@@ -391,8 +354,8 @@ infoMsg "* in your bash console to get started"
 infoMsg "************************************************************************"
 infoMsg ""
 
-export MIRA_PATH="$INSTALL_DIR"
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lib
-$INSTALL_DIR/bin/mirapackage -L
-
-
+if confirm "Start mirapackage to install more packages" ; then
+	export MIRA_PATH="$INSTALL_DIR"
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lib
+	$INSTALL_DIR/bin/mirapackage
+fi
