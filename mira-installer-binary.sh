@@ -4,12 +4,7 @@
 
 confirm()
 {
-	echo -n "$1 ? (n) "
-	read ans
-	case "$ans" in
-	y|Y|yes|YES|Yes) return 0 ;;
-	*) return 1 ;;
-	esac
+	return 0
 }
 
 infoMsg()
@@ -50,7 +45,7 @@ echo ""
 FTPURL=ftp://mira-project.org
 
 if [ $# -gt 2 -o $# -eq 0 -o "$1" == "help" -o "$1" == "--help" ] ; then
-	echo "Usage: $0 SystemName [ftp url]"
+	echo "Usage: $0 SystemName installdir [ftp url]"
 	echo "  Following systems are supports at default FTP (\"$FTPURL\"): "
 	echo "    redhat-el6-i686     : RedHat Enterprise Linux / CentOS 6.x, 32bit"
 	echo "    ubuntu-1204lts-i686 : Ubuntu 12.04LTS, 32bit"
@@ -60,9 +55,11 @@ fi
 
 SYSTEM=$1
 
-if [ $# -gt 1 ] ; then
+INSTALL_DIR_DEFAULT=$2
+
+if [ $# -gt 2 ] ; then
 	echo "The following FTP settings will be used:"
-	FTPURL=$2
+	FTPURL=$3
 	echo "Url: ${FTPURL}"
 	if ! confirm "Do you want to proceed?"  ; then
 		exit
@@ -71,13 +68,7 @@ fi
 
 ###############################################################################
 
-INSTALL_DIR_DEFAULT=`pwd`/mira
-
-read -p "Please input the installation directory. Enter=default($INSTALL_DIR_DEFAULT): " INSTALL_DIR_INPUT
-
-if [ -z "$INSTALL_DIR_INPUT" ]; then
-	INSTALL_DIR_INPUT=$INSTALL_DIR_DEFAULT
-fi
+INSTALL_DIR_INPUT=$INSTALL_DIR_DEFAULT
 
 # normalize the path
 INSTALL_DIR=$(cd $(eval "dirname ${INSTALL_DIR_INPUT}");pwd)/$(eval "basename ${INSTALL_DIR_INPUT}")
@@ -354,8 +345,3 @@ infoMsg "* in your bash console to get started"
 infoMsg "************************************************************************"
 infoMsg ""
 
-if confirm "Start mirapackage to install more packages" ; then
-	export MIRA_PATH="$INSTALL_DIR"
-	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$INSTALL_DIR/lib
-	$INSTALL_DIR/bin/mirapackage
-fi
