@@ -274,6 +274,11 @@ do
 			fatalInfoMsg "FATAL: Add installation repository failed."
 		fi
 
+                $BOOTSTRAP_DIR/bin/mirapackage --addurl "ftp://metralabs-service.com/repos/MIRA-commercial/${SYSTEM}/MIRA-commercial.repo" 2>&1 | tee -a $LOG_FILE
+                if [ $PIPESTATUS -ne 0 ] ; then
+                        fatalInfoMsg "FATAL: Add installation repository failed."
+                fi
+
 		infoMsg "INFO: Reindex installation repository"
 		$BOOTSTRAP_DIR/bin/mirapackage --reindex 2>&1 | tee -a $LOG_FILE
 		if [ $PIPESTATUS -ne 0 ] ; then
@@ -308,6 +313,14 @@ do
 		installPackage MIRAtape
 		installPackage MIRAinspect
 		installPackage MIRAWizard
+
+		installPackage CAN
+		installPackage CANDriver
+
+		installPackage SCITOS 
+		installPackage DeviceManager
+		installPackage SCITOSConfigs
+		installPackage RangeFinder
 
 		# Now delete the bootstrap directory
 		rm -rf $BOOTSTRAP_DIR
