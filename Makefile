@@ -14,6 +14,8 @@ all:	$(DEBPKG)
 clean:
 	rm -rf $(MIRADIR) $(PKG_NAME)_$(VERSION).orig.tar.gz
 
+apt:
+	apt-get install debhelper libboost-all-dev libncurses5-dev libogre-dev libqwt5-qt4-dev libsqlite3-dev libssl-dev libxml2-dev libxrandr-dev pyqt4-dev-tools qt4-dev-tools ros-hydro-opencv2 subversion libsvn-dev
 
 $(MIRADIR)/$(INSTALL_PREFIX):
 	mkdir -p $(MIRADIR)/$(INSTALL_PREFIX)
