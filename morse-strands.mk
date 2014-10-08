@@ -1,7 +1,7 @@
 ##############################################################################
 ### CONFIGURATION ###
 # package name
-PKG_NAME:=morse
+PKG_NAME:=morse-blender-2.65-py-3.3
 
 # version	
 VERSION:=0.1
