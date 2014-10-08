@@ -24,7 +24,7 @@ INSTALL_PREFIX:=opt
 ROOT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 ## This is the install command that will install the package unter the INSTALL_PREFIX 
-INSTALL_COMMAND=(mkdir -p $(GLOBAL_ROOT) && cd $(GLOBAL_ROOT) && bash $(ROOT_DIR)/morse-setup.sh
+INSTALL_COMMAND=(mkdir -p $(GLOBAL_ROOT) && cd $(GLOBAL_ROOT) && bash $(ROOT_DIR)/morse-setup.sh)
 
 ##############################################################################
 
