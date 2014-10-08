@@ -1,0 +1,8 @@
+5c5
+< Build-Depends: debhelper (>= 8.0.0)
+---
+> Build-Depends: debhelper (>= 8.0.0), @DEPENDS@
+13c13
+< Depends: ${shlibs:Depends}, ${misc:Depends}
+---
+> Depends: @DEPENDS@
