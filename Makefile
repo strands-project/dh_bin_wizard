@@ -1,47 +1,31 @@
-PKG_NAME=mira-scitos
-VERSION=0.1
-MIRADIR=$(PKG_NAME)-$(VERSION)
-ARCH=amd64
+##############################################################################
+### CONFIGURATION ###
+# package name
+PKG_NAME:=mira-scitos
 
-INSTALL_PREFIX=opt
-INSTALL_ROOT=$(INSTALL_PREFIX)/$(PKG_NAME)
+# version	
+VERSION:=0.1
 
-DEBPKG=$(PKG_NAME)_$(VERSION)-1_$(ARCH).deb
+# architecture to be build
+ARCH:=amd64
 
+# license (apache|artistic|bsd|gpl|gpl2|gpl3|lgpl|lgpl2|lgpl3|x11)
+LICENSE:=gpl3
 
-all:	$(DEBPKG)
+# maintainer email address
+MAINTAINER:=marc@hanheide.net
 
-clean:
-	rm -rf $(MIRADIR) $(PKG_NAME)_$(VERSION).orig.tar.gz
+# all deb packages needed to build this
+APT_INSTALL:=libboost-all-dev \
+	libncurses5-dev libogre-dev libqwt5-qt4-dev libsqlite3-dev libssl-dev libxml2-dev \
+	libxrandr-dev pyqt4-dev-tools qt4-dev-tools ros-hydro-opencv2 subversion libsvn-dev
 
-apt:
-	apt-get install debhelper libboost-all-dev libncurses5-dev libogre-dev libqwt5-qt4-dev libsqlite3-dev libssl-dev libxml2-dev libxrandr-dev pyqt4-dev-tools qt4-dev-tools ros-hydro-opencv2 subversion libsvn-dev
+## Install prefix WITHOUT leading '/', e.g. 'opt' for '/opt'
+INSTALL_PREFIX:=opt
 
-$(MIRADIR)/$(INSTALL_PREFIX):
-	mkdir -p $(MIRADIR)/$(INSTALL_PREFIX)
+## This is the install command that will install the package unter the INSTALL_PREFIX 
+INSTALL_COMMAND=bash ./mira-installer-binary.sh ubuntu-1204lts-x64 $(GLOBAL_ROOT)
 
-dh_make: $(PKG_NAME)_$(VERSION).orig.tar.gz
-	touch $@
+##############################################################################
 
-$(PKG_NAME)_$(VERSION).orig.tar.gz: $(MIRADIR)/$(INSTALL_ROOT)
-	(cd $(MIRADIR) && dh_make -c gpl3 -e marc@hanheide.net --createorig -s )
-
-$(MIRADIR)/$(INSTALL_ROOT): $(MIRADIR)/$(INSTALL_PREFIX) /$(INSTALL_ROOT)/
-	rsync -a /$(INSTALL_ROOT)/ $(MIRADIR)/$(INSTALL_ROOT)
-	touch $(MIRADIR)/$(INSTALL_ROOT)
-
-$(DEBPKG): patch
-	(cd $(MIRADIR); dpkg-buildpackage -uc -us -b)
-	
-$(MIRADIR)/debian/$(PKG_NAME).dirs:
-	echo "/$(INSTALL_ROOT)" > $@
-
-patch:	dh_make $(MIRADIR)/debian/$(PKG_NAME).dirs
-	patch -N $(MIRADIR)/debian/rules < patches/rules.patch
-	patch -N $(MIRADIR)/debian/control < patches/control.patch
-	touch $@
-
-
-
-/$(INSTALL_ROOT):
-	bash ./mira-installer-binary.sh ubuntu-1204lts-x64 /$(INSTALL_ROOT)
+include bin-deb.mk

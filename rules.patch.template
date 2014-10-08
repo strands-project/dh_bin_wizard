@@ -5,7 +5,7 @@
 > 	dh_clean -k
 > 	dh_installdirs
 > 	# Copy files into staging area
-> 	rsync --exclude .svn -a opt debian/mira-scitos
+> 	rsync --exclude .svn -a opt debian/@PKG_NAME@
 > 
 > override_dh_shlibdeps:
 > 	@echo "not needed"
