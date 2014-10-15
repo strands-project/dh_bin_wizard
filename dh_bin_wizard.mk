@@ -1,7 +1,7 @@
 ### some further constants
 LOCAL_PKG_DIR=$(PKG_NAME)-$(VERSION)
 INSTALL_ROOT=$(INSTALL_PREFIX)/$(PKG_NAME)
-DEBPKG=$(PKG_NAME)_$(VERSION)-1_$(ARCH).deb
+DEBPKG=$(PKG_NAME)_$(VERSION)-$(DEBINC)_$(ARCH).deb
 COOKIES_DIR=cookies
 
 # Targets shortcuts used in the rules below

@@ -6,6 +6,9 @@ PKG_NAME:=morse-blender-2.65-py-3.3
 # version	
 VERSION:=0.1
 
+# Debian increment (to be bumped when the same version is packaged again)	
+DEBINC:=1
+
 # architecture to be build
 ARCH:=amd64
 
@@ -28,4 +31,4 @@ INSTALL_COMMAND=(mkdir -p $(GLOBAL_ROOT) && cd $(GLOBAL_ROOT) && bash $(ROOT_DIR
 
 ##############################################################################
 
-include bin-deb.mk
+include dh_bin_wizard.mk

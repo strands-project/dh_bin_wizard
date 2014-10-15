@@ -6,6 +6,9 @@ PKG_NAME:=mira-scitos
 # version	
 VERSION:=0.2
 
+# Debian increment (to be bumped when the same version is packaged again)	
+DEBINC:=1
+
 # architecture to be build
 ARCH:=amd64
 
@@ -28,4 +31,4 @@ INSTALL_COMMAND=bash ./mira-installer-binary.sh ubuntu-1204lts-x64 $(GLOBAL_ROOT
 
 ##############################################################################
 
-include bin-deb.mk
+include dh_bin_wizard.mk
