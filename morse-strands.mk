@@ -19,7 +19,7 @@ LICENSE:=gpl3
 MAINTAINER:=marc@hanheide.net
 
 # all deb packages needed to build this
-APT_INSTALL:=cmake git zlib1g-dev ros-hydro-desktop-full ros-hydro-rospy python-rosinstall git-cvs
+APT_INSTALL:=cmake git zlib1g-dev ros-hydro-desktop-full ros-hydro-rospy python-rosinstall git-cvs python-rospkg
 
 ## Install prefix WITHOUT leading '/', e.g. 'opt' for '/opt'
 INSTALL_PREFIX:=opt
