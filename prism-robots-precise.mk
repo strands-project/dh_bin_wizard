@@ -4,7 +4,7 @@
 PKG_NAME:=prism-robots
 
 # version	
-VERSION:=4.2.1
+VERSION:=4.2.1precise
 
 # Debian increment (to be bumped when the same version is packaged again)	
 DEBINC:=1
